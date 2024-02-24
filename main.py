@@ -1,6 +1,6 @@
-import os, shutil
+import os, shutil, sys
 
-directory = str(input("Path to Directory: ")).strip("\"")
+directory = sys.argv[1] if len(sys.argv) > 1 else str(input("Path to Directory: ")).strip("\"")
 leave = []
 
 if os.path.exists("leave.txt"):
