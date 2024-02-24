@@ -10,9 +10,12 @@ if os.path.exists("leave.txt"):
 
 for project in os.listdir(directory):
     if project in leave: continue
-    
-    # try:
-    #     if os.path.isdir(f"Works/{i}") and os.path.isdir(f"Works/{i}/node_modules"):
-    #         shutil.rmtree(f"Works/{i}/node_modules")
-    # except:
-    #     continue
+    project_dir = f"{directory}\\{project}" 
+
+    if not os.path.isdir(project_dir) or not os.path.isdir(f"{project_dir}\\node_modules"):
+        continue
+
+    try:
+        shutil.rmtree(f"{project_dir}\\node_modules")
+    except Exception as err:
+        print(f"(Skipping) Issue in {project}: {err}")
