@@ -9,21 +9,22 @@ if os.path.exists("leave.txt"):
             leave.append(i)
 
 def check_for_node_modules(project_dir: str) -> bool:
-     for root, dirs, _ in os.walk(project_dir):
-         return 'node_modules' in dirs, root
+    folders = []
+    for root, dirs, _ in os.walk(project_dir):
+        if "node_modules" in dirs: folders.append(root)
+
+    return folders
 
 for project in os.listdir(directory):
     project_dir = f"{directory}\\{project}" 
     if project in leave or not os.path.isdir(project_dir):
         continue
 
-    exists_in_project, project_dir = check_for_node_modules(project_dir)
-
-    if not exists_in_project: 
-        continue
+    folders = check_for_node_modules(project_dir)
 
     try:
-        shutil.rmtree(f"{project_dir}\\node_modules")
+        for folder in folders:
+            shutil.rmtree(f"{folder}\\node_modules")
         print(f"{project_dir} NPKilled!!")
     except Exception as err:
         print(f"(Skipping) Issue in {project}: {err}")
